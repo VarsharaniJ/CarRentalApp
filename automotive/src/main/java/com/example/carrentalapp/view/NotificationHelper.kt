@@ -5,7 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.example.carrentalapp.R
+
 
 class NotificationHelper(private val context: Context) {
     private val notificationManager =
@@ -13,14 +13,12 @@ class NotificationHelper(private val context: Context) {
 
     fun showLocalNotification(message: String) {
         val channelId = "SPEED_ALERTS"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Speed Alerts",
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel(
+            channelId,
+            "Speed Alerts",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationManager.createNotificationChannel(channel)
 
         val notification = NotificationCompat.Builder(context, channelId)
             .setContentTitle("Speed Alert")

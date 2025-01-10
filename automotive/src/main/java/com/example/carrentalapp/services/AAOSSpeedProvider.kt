@@ -29,6 +29,7 @@ object  AAOSSpeedProvider {
             object : CarPropertyManager.CarPropertyEventCallback {
                 override fun onChangeEvent(event: CarPropertyManager.CarPropertyEvent) {
                     if (event.propertyId == VehiclePropertyIds.PERF_VEHICLE_SPEED) {
+
                         val speed = event.value as Float // Speed in m/s
                         Log.d(TAG,"Vehicle Speed: $speed m/s")
                         onSpeedUpdate(speed * 3.6f) // Convert to km/h

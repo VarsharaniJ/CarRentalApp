@@ -4,10 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.Handler
 import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
 import androidx.appcompat.app.AppCompatActivity
 import com.example.carrentalapp.application.SpeedLimitManager
 import com.example.carrentalapp.data.ApiService
@@ -16,12 +13,10 @@ import com.example.carrentalapp.data.NotificationRepositoryImpl
 import com.example.carrentalapp.data.SpeedLimitRepositoryImpl
 import com.example.carrentalapp.entities.CustomerType
 import com.example.carrentalapp.entities.Renter
-import com.example.carrentalapp.services.AAOSSpeedProvider
 import com.example.carrentalapp.services.ServiceComponents
 import com.example.carrentalapp.services.SpeedMonitoringService
 import com.example.carrentalapp.usecase.GetSpeedLimitUseCase
 import com.example.carrentalapp.usecase.NotifySpeedLimitExceededUseCase
-import com.example.carrentalapp.usecase.SpeedChecker
 import com.example.carrentalapp.viewmodel.SpeedMonitoringViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             val binder = service as SpeedMonitoringService
             speedMonitoringService = binder
-            viewModel = SpeedMonitoringViewModel(ServiceComponents.speedLimitManager, speedMonitoringService )
+            viewModel = SpeedMonitoringViewModel(speedMonitoringService )
             viewModel.startMonitoring("1", Renter(id = "1", name = "Varsha", "123466789",customerType = CustomerType.PREMIUM))
 
             viewModel.speed.observe(this@MainActivity) { speed ->

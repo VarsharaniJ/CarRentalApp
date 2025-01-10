@@ -3,12 +3,7 @@ package com.example.carrentalapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.carrentalapp.application.SpeedLimitManager
-import com.example.carrentalapp.entities.CustomerType
 import com.example.carrentalapp.entities.Renter
-import com.example.carrentalapp.usecase.GetSpeedLimitUseCase
-import com.example.carrentalapp.usecase.NotifySpeedLimitExceededUseCase
-import com.example.carrentalapp.services.AAOSSpeedProvider
 import com.example.carrentalapp.services.SpeedMonitoringService
 
 

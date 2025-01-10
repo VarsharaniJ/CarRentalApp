@@ -7,16 +7,12 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Binder
-import android.os.Build
 import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
+
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleService
+
 import androidx.lifecycle.MutableLiveData
-import com.example.carrentalapp.R
-import com.example.carrentalapp.application.SpeedLimitManager
-import com.example.carrentalapp.data.FirebaseNotificationManager
+
 import com.example.carrentalapp.entities.Renter
 
 class SpeedMonitoringService : Service() {
@@ -27,8 +23,6 @@ class SpeedMonitoringService : Service() {
     private val _speedLiveData = MutableLiveData<Float>()
     val speedLiveData: MutableLiveData<Float> get() = _speedLiveData
 
-
-    // Binder to allow communication between Activity and Service
     private val binder = LocalBinder()
 
     override fun onCreate() {
@@ -36,10 +30,9 @@ class SpeedMonitoringService : Service() {
 
         val speedLimitManager = ServiceComponents.speedLimitManager
 
-        // Start the foreground service
+
         startForegroundService()
 
-        // Initialize speed updates
         AAOSSpeedProvider.initialize { speed ->
             _speedLiveData.postValue(speed)
             // Check if speed exceeds the limit
@@ -73,7 +66,7 @@ class SpeedMonitoringService : Service() {
         this.renter = renter
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
         return binder
     }
 

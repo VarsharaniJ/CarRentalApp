@@ -9,8 +9,8 @@ class ApiService {
     fun getSpeedLimit(carId: String, customer: Renter): SpeedLimit? {
         // Logic to fetch speed limit based on customer type
         return when (customer.customerType) {
-            CustomerType.PREMIUM -> SpeedLimit(carId, maxSpeed = 120) // Premium customers get a higher limit
-            CustomerType.STANDARD -> SpeedLimit(carId, maxSpeed = 100) // Standard customers get the default limit
+            CustomerType.PREMIUM -> SpeedLimit(carId, maxSpeed = 120)
+            CustomerType.STANDARD -> SpeedLimit(carId, maxSpeed = 100)
         }
     }
 }
