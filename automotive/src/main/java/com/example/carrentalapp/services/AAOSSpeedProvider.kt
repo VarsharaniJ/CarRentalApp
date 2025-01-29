@@ -6,6 +6,11 @@ import android.car.hardware.property.CarPropertyManager
 import android.car.VehiclePropertyIds
 import android.util.Log
 
+/**
+ * Singleton object for accessing and managing vehicle speed data using the AAOS (Android Automotive OS) API.
+ *
+ * This object provides methods to initialize, monitor, and release resources for vehicle speed updates.
+ */
 object  AAOSSpeedProvider {
     private var appContext: Context? = null
     private var car: Car? = null
@@ -18,6 +23,15 @@ object  AAOSSpeedProvider {
         appContext = context.applicationContext
     }
 
+
+    /**
+     * Initializes the provider and registers a callback for vehicle speed updates.
+     *
+     * This method sets up a connection to the car property manager and starts listening for
+     * vehicle speed changes.
+     *
+     * @param onSpeedUpdate A callback function to handle speed updates. The speed is provided in km/h.
+     */
     fun initialize(onSpeedUpdate: (Float) -> Unit){
         this.onSpeedUpdate = onSpeedUpdate
 
@@ -45,7 +59,9 @@ object  AAOSSpeedProvider {
         )
     }
 
+
     fun releaseResources() {
+        //Releases resources and unregisters callbacks
         carPropertyManager?.unregisterCallback { }
         car?.disconnect()
     }
