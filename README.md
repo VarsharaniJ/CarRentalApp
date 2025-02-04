@@ -30,4 +30,4 @@ This project is a simplified implementation of a system for a car rental company
 
 - Notification delivery is simulated with console output (`println`), and no real Firebase or AWS integration is performed.
 - Dependency provided manually.
-
+- ApiService class provide mock implementation, the speed limit is determined based on the customer's type (either PREMIUM or STANDARD).
