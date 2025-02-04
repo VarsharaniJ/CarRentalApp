@@ -1,8 +1,6 @@
 package com.example.carrentalapp.entities
 
 /**
- * Data class representing the speed limit information for a specific car.
- *
  * This class holds the car's ID and the maximum speed allowed for that car.
  *
  * @param carId The unique identifier for the car.

@@ -1,8 +1,6 @@
 package com.example.carrentalapp.entities
 
 /**
- * Data class representing a car in the car rental system.
- *
  * This class holds information about the car such as its unique identifier and model name.
  *
  * @param id The unique identifier for the car.

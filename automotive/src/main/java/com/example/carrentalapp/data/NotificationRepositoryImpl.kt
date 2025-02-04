@@ -4,21 +4,13 @@ import com.example.carrentalapp.data.interfaces.NotificationRepository
 
 /**
  * Implementation of the [NotificationRepository] interface that sends notifications using
- * [FirebaseNotificationManager].
- *
- * @property firebaseNotificationManager The [FirebaseNotificationManager] instance used
- * to send notifications.
+ * [FirebaseNotificationChannel] and [AWSNotificationChannel].
  */
-class NotificationRepositoryImpl(private val firebaseNotificationManager: FirebaseNotificationManager?) : NotificationRepository {
+class NotificationRepositoryImpl(private val channelFactory: NotificationChannelFactory) : NotificationRepository {
     /**
-     * Sends a notification with the provided message and channel.
-     *
-     * This method delegates the task of sending the notification to [firebaseNotificationManager].
-     *
-     * @param message The message to be sent in the notification.
-     * @param channel The channel through which the notification will be sent
+     * Sends a notification with the provided message and available channel.
      */
-    override fun sendNotification(message: String, channel: String) {
-        firebaseNotificationManager?.sendNotification(message, channel)
+    override fun sendNotification(message: String) {
+        channelFactory.getChannel().sendNotification(message)
     }
 }
