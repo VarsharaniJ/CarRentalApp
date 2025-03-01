@@ -2,6 +2,7 @@ package com.example.carrentalapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.carrentalapp.services.SpeedMonitoringService
 
@@ -17,16 +18,11 @@ class SpeedMonitoringViewModel(
     private val _speed = MutableLiveData<Float>()
     val speed: LiveData<Float> get() = _speed
 
-    init {
-        // Observe speed updates from the service
-        speedMonitoringService.speedLiveData.observeForever { vehicleSpeed ->
-            _speed.postValue(vehicleSpeed)
-        }
+    private val speedObserver = Observer<Float> { vehicleSpeed ->
+        _speed.postValue(vehicleSpeed)
     }
-
     override fun onCleared() {
         super.onCleared()
         // Removes observers from the `SpeedMonitoringService`
-        speedMonitoringService.speedLiveData.removeObserver { }
     }
 }

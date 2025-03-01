@@ -12,6 +12,8 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 
 import androidx.lifecycle.MutableLiveData
+import com.example.carrentalapp.application.SpeedLimitManager
+import com.example.carrentalapp.entities.Renter
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,14 +24,12 @@ import kotlinx.coroutines.launch
  */
 class SpeedMonitoringService : Service() {
 
-    // LiveData to observe the speed changes
-    private val _speedLiveData = MutableLiveData<Float>()
-
+    private lateinit var speedLimitManager: SpeedLimitManager
+    private lateinit var sampleRenter: Renter
 
     /**
      * Exposes the speed LiveData to allow external observation of speed changes.
      */
-    val speedLiveData: MutableLiveData<Float> get() = _speedLiveData
 
     // Binder instance to provide service reference to the client
     private val binder = LocalBinder()
@@ -44,7 +44,9 @@ class SpeedMonitoringService : Service() {
         //Starts monitoring car speed
         AAOSSpeedProvider.initialize { speed ->
             CoroutineScope(Dispatchers.Default).launch {
-                _speedLiveData.postValue(speed)
+                if (::speedLimitManager.isInitialized && ::sampleRenter.isInitialized) {
+                    speedLimitManager.checkAndNotify("1", sampleRenter, speed.toInt())
+                }
             }
         }
     }
@@ -70,6 +72,14 @@ class SpeedMonitoringService : Service() {
         startForeground(1, notification)
     }
 
+    // Method to set the SpeedLimitManager
+    fun setSpeedLimitManager(manager: SpeedLimitManager) {
+        speedLimitManager = manager
+    }
+    fun setSampleRenter(sampleRenter : Renter)
+    {
+        this.sampleRenter = sampleRenter
+    }
 
     override fun onBind(intent: Intent?): IBinder {
         return binder

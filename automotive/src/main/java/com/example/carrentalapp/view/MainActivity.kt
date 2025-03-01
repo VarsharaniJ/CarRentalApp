@@ -37,15 +37,9 @@ class MainActivity : AppCompatActivity() {
             speedMonitoringService = binder.getService()
             viewModel = SpeedMonitoringViewModel(speedMonitoringService )
             val sampleRenter = Renter("1", "Varsha", "123456789", CustomerType.PREMIUM)
-
+            speedMonitoringService.setSampleRenter(sampleRenter);
             speedLimitManager = getSpeedLimitManager()
-            // Observe speed updates from the service. When a new speed is received,
-            // we call checkAndNotify with the updated speed.
-            viewModel.speed.observe(this@MainActivity) { speed ->
-                println("Current speed: $speed km/h")
-                // Use the updated speed value instead of a hardcoded one.
-                speedLimitManager.checkAndNotify("1", sampleRenter, speed.toInt())
-            }
+            speedMonitoringService.setSpeedLimitManager(speedLimitManager)
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
